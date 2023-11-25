@@ -1,0 +1,288 @@
+/* remove default values*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ------------- */
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1 {
+  font-size: 2.7rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+h3 {
+  font-weight: 700;
+  margin: 10px 10px 0 0;
+}
+
+div.start-search > p {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: #fff;
+}
+
+a:hover,
+a:focus {
+  color: #f7d063;
+  cursor: pointer;
+}
+
+.container {
+  position: relative;
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+header {
+  height: 208px;
+  color: white;
+  background-image: url(img/movie-posters.jpg);
+  background-color: #545357;
+  background-size: cover;
+  background-position: 0px -160px;
+  background-blend-mode: multiply;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+main {
+  background-color: #121212;
+  min-height: 571px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #2e2e2f;
+}
+
+.searchbox {
+  position: absolute;
+  top: 190px;
+  left: 40px;
+  max-width: 462px;
+  width: 90%;
+  display: flex;
+  background-color: #2e2e2f;
+  border-radius: 6px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+input[type='text'] {
+  width: 75%;
+  padding: 0.75em 0.75em 0.75em 3em;
+  background: url(icons/Icon-search.svg);
+  background-repeat: no-repeat;
+  background-position: 12px;
+  color: #a5a5a5;
+  border: none;
+  border-radius: 6px 0 0 6px;
+}
+
+input[type='text']::placeholder {
+  color: #a5a5a5;
+  font-weight: 500;
+}
+
+button.search-btn {
+  width: 25%;
+  background-color: #4b4b4b;
+  color: #fff;
+  margin-left: 0.2em;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+}
+
+button.search-btn:hover {
+  color: #f7d063;
+}
+
+div.start-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #787878;
+}
+
+@media (max-width: 440px) {
+  h1 {
+    margin: 0 0.25em;
+    font-size: 2.2rem;
+  }
+
+  h3 {
+    font-size: 0.75rem;
+  }
+
+  .container {
+    height: 100vh;
+  }
+
+  main {
+    height: calc(100vh - 208px);
+  }
+}
+
+/* Movie's grid */
+
+.movie-grid {
+  width: 85%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 0.75fr 2fr;
+  column-gap: 1.5em;
+  color: #fff;
+}
+
+.movie-poster {
+  width: 100px;
+  grid-row: 1/4;
+}
+
+.movie-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+.main-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25em;
+  grid-column: 2/5;
+}
+
+.secondary-info,
+.movie-plot {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+  grid-column: 2/5;
+}
+
+.secondary-info {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.icon-star {
+  width: 4%;
+  margin: 0 -0.1em 0 0.25em;
+}
+
+.movie-rating {
+  font-size: 0.75rem;
+  font-weight: 400;
+  margin-top: 0.1em;
+}
+
+div.add-to-watchlist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
+.movie-plot {
+  align-items: flex-start;
+  font-weight: 400;
+  color: #a5a5a5;
+}
+
+hr {
+  width: 80%;
+  border: 1px solid #2c2c2c;
+  margin: 1.5em 0;
+}
+
+/* watchlist */
+
+div.add-movies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+div.add-movies:nth-child(1) {
+  color: #787878;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+div.add-movies > div {
+  display: flex;
+  gap: 0.5em;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
