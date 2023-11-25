@@ -19,12 +19,12 @@ inputEl.addEventListener('change', () => {
 })
 
 function searchForMovies() {
-  fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
+  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
     .then((res) => res.json())
     .then((data) => {
       for (const movie of data.Search) {
         const imdbId = movie.imdbID
-        fetch(`http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
+        fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
           .then((res) => res.json())
           .then((data) => {
             moviesData.push(data)
