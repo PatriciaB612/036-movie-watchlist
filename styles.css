@@ -123,8 +123,7 @@ main {
 .searchbox {
   position: absolute;
   top: 190px;
-  left: 40px;
-  max-width: 462px;
+  left: 5%;
   width: 90%;
   display: flex;
   background-color: #2e2e2f;
@@ -170,6 +169,7 @@ div.start-search {
   font-size: 1.125rem;
   font-weight: 700;
   color: #787878;
+  padding-bottom: 20%;
 }
 
 @media (max-width: 440px) {
@@ -182,12 +182,12 @@ div.start-search {
     font-size: 0.75rem;
   }
 
-  .container {
-    height: 100vh;
+  main {
+    min-height: calc(100vh - 208px);
   }
 
-  main {
-    height: calc(100vh - 208px);
+  .searchbox {
+    left: 5vw;
   }
 }
 
