@@ -4,7 +4,7 @@ const inputEl = document.getElementById('input-el')
 const mainDiv = document.querySelector('main')
 const startSearchDiv = document.querySelector('.start-search')
 let moviesData = []
-const addBtn = document.querySelector('.add-to-watchlist')
+let myMovies = []
 
 searchBtn.addEventListener('click', searchForMovies)
 
@@ -17,6 +17,8 @@ inputEl.addEventListener('keyup', (e) => {
 inputEl.addEventListener('change', () => {
   moviesData = []
 })
+
+document.addEventListener('click', () => {})
 
 function searchForMovies() {
   fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
@@ -41,9 +43,9 @@ function searchForMovies() {
 function renderMoviesData() {
   mainDiv.innerHTML = ''
   mainDiv.style.paddingTop = '4em'
-  for (let movieData of moviesData) {
+  moviesData.forEach(function (movieData) {
     mainDiv.innerHTML += `
-                      <div class="movie-grid">
+                      <div class="movie-grid" data-id="${movieData.imdbID}">
                         <img src="${movieData.Poster}" class="movie-poster">
                         <div class="main-info">
                           <p class="movie-title">${movieData.Title}</p>
@@ -55,7 +57,7 @@ function renderMoviesData() {
                         </div>
                         <div class="secondary-info">
                           <p>${movieData.Runtime}</p>
-                          <p>${movieData.Genre}</p>
+                          <p>${movieData.Genre.split(', ')[0]}</p>
                           <div class="add-to-watchlist">
                             <img src="icons/icon-add.svg" />
                             <p>Watchlist</p>
@@ -65,5 +67,12 @@ function renderMoviesData() {
                       </div>
                       <hr>
             `
-  }
+  })
 }
+
+function addSelectedClass() {}
+
+function addSelectedMovieToLocalStorage() {}
+
+//
+//
