@@ -1,10 +1,12 @@
+import { getFeedHtml } from '/functions.js'
+
 const searchBtn = document.getElementById('search-btn')
 const apiKey = '6804c63'
 const inputEl = document.getElementById('input-el')
-const mainDiv = document.querySelector('main')
+const searchedMoviesDiv = document.querySelector('.searched-movies')
 const startSearchDiv = document.querySelector('.start-search')
-let moviesData = []
-let myMovies = []
+let searchedMoviesArray = []
+const addedMoviesArray = retrieveWatchlistFromLocalStorage()
 
 searchBtn.addEventListener('click', searchForMovies)
 
@@ -15,10 +17,14 @@ inputEl.addEventListener('keyup', (e) => {
 })
 
 inputEl.addEventListener('change', () => {
-  moviesData = []
+  searchedMoviesArray = []
 })
 
-document.addEventListener('click', () => {})
+document.addEventListener('click', (e) => {
+  if (e.target.dataset.add) {
+    handleAddClick(e.target.dataset.add)
+  }
+})
 
 function searchForMovies() {
   fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
@@ -29,8 +35,9 @@ function searchForMovies() {
         fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
           .then((res) => res.json())
           .then((data) => {
-            moviesData.push(data)
-            renderMoviesData()
+            searchedMoviesArray.push(data)
+            console.log(searchedMoviesArray)
+            renderSearchedMovies()
           })
       }
     })
@@ -40,39 +47,30 @@ function searchForMovies() {
     })
 }
 
-function renderMoviesData() {
-  mainDiv.innerHTML = ''
-  mainDiv.style.paddingTop = '4em'
-  moviesData.forEach(function (movieData) {
-    mainDiv.innerHTML += `
-                      <div class="movie-grid" data-id="${movieData.imdbID}">
-                        <img src="${movieData.Poster}" class="movie-poster">
-                        <div class="main-info">
-                          <p class="movie-title">${movieData.Title}</p>
-                          <img src="icons/icon-star.svg" class="icon-star"/>
-                          <p class='movie-rating'>${movieData.Ratings[0].Value.slice(
-                            0,
-                            3
-                          )}</p>
-                        </div>
-                        <div class="secondary-info">
-                          <p>${movieData.Runtime}</p>
-                          <p>${movieData.Genre.split(', ')[0]}</p>
-                          <div class="add-to-watchlist">
-                            <img src="icons/icon-add.svg" />
-                            <p>Watchlist</p>
-                          </div>
-                        </div>
-                        <p class="movie-plot">${movieData.Plot}</p>
-                      </div>
-                      <hr>
-            `
-  })
+function renderSearchedMovies() {
+  searchedMoviesDiv.style.paddingTop = '4em'
+  searchedMoviesDiv.innerHTML = getFeedHtml(
+    searchedMoviesArray,
+    'add',
+    'Watchlist'
+  )
 }
 
-function addSelectedClass() {}
+function handleAddClick(movieId) {
+  const targetMovieObj = searchedMoviesArray.filter(function (movie) {
+    return movie.imdbID === movieId
+  })[0]
 
-function addSelectedMovieToLocalStorage() {}
+  addedMoviesArray.unshift(targetMovieObj)
+  addMoviesToLocalStorage()
+}
 
-//
-//
+function addMoviesToLocalStorage() {
+  localStorage.setItem('addedMovies', JSON.stringify(addedMoviesArray))
+}
+
+function retrieveWatchlistFromLocalStorage() {
+  return JSON.parse(localStorage.getItem('addedMovies'))
+}
+
+retrieveWatchlistFromLocalStorage()

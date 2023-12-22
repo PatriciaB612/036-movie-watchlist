@@ -226,7 +226,7 @@ div.start-search {
   margin-top: 0.1em;
 }
 
-div.add-to-watchlist {
+span.add-remove-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -248,20 +248,20 @@ hr {
 
 /* watchlist */
 
-div.add-movies {
+div.watchlist {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1em;
 }
 
-div.add-movies:nth-child(1) {
+div.watchlist:nth-child(1) {
   color: #787878;
   font-size: 1.125rem;
   font-weight: 700;
 }
 
-div.add-movies > div {
+div.watchlist > div {
   display: flex;
   gap: 0.5em;
   color: #fff;
