@@ -7,10 +7,11 @@ export function getFeedHtml(moviesArray, btn, btnAction) {
                   <div class="main-info">
                     <p class="movie-title">${movie.Title}</p>
                     <img src="icons/icon-star.svg" class="icon-star"/>
-                    <p class='movie-rating'>${movie.Ratings[0].Value.slice(
-                      0,
-                      3
-                    )}</p>
+                    <p class='movie-rating'>${
+                      movie.Ratings.length > 0
+                        ? movie.Ratings[0].Value.slice(0, 3)
+                        : 'N/A'
+                    }</p>
                   </div>
                   <div class="secondary-info">
                     <p>${movie.Runtime}</p>

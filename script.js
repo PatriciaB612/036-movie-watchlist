@@ -1,4 +1,4 @@
-import { getFeedHtml } from '/functions.js'
+import { getFeedHtml } from '/feed.js'
 
 const searchBtn = document.getElementById('search-btn')
 const apiKey = '6804c63'
@@ -6,6 +6,7 @@ const inputEl = document.getElementById('input-el')
 const searchedMoviesDiv = document.querySelector('.searched-movies')
 const startSearchDiv = document.querySelector('.start-search')
 let searchedMoviesArray = []
+
 const addedMoviesArray = retrieveWatchlistFromLocalStorage()
 
 searchBtn.addEventListener('click', searchForMovies)
@@ -57,12 +58,16 @@ function renderSearchedMovies() {
 }
 
 function handleAddClick(movieId) {
-  const targetMovieObj = searchedMoviesArray.filter(function (movie) {
-    return movie.imdbID === movieId
-  })[0]
+  const isAdded = addedMoviesArray.some((movie) => movie.imdbID === movieId)
 
-  addedMoviesArray.unshift(targetMovieObj)
-  addMoviesToLocalStorage()
+  if (!isAdded) {
+    const targetMovieObj = searchedMoviesArray.filter(function (movie) {
+      return movie.imdbID === movieId
+    })[0]
+
+    addedMoviesArray.unshift(targetMovieObj)
+    addMoviesToLocalStorage()
+  }
 }
 
 function addMoviesToLocalStorage() {
