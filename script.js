@@ -27,6 +27,12 @@ document.addEventListener('click', (e) => {
   }
 })
 
+document.addEventListener('touchstart', (e) => {
+  if (e.target.dataset.add) {
+    handleAddClick(e.target.dataset.add)
+  }
+})
+
 function searchForMovies() {
   fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
     .then((res) => res.json())
