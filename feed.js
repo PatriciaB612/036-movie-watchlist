@@ -1,6 +1,17 @@
-export function getFeedHtml(moviesArray, btn, btnAction) {
+export function getFeedHtml(moviesArray) {
   let feedHtml = ''
+
   moviesArray.forEach(function (movie) {
+    function selectBtnIcon() {
+      let btnIcon = 'add'
+      if (movie.isAdded) {
+        btnIcon = 'remove'
+      } else if (movie.isChecked) {
+        btnIcon = 'checked'
+      }
+      return btnIcon
+    }
+
     feedHtml += `
                 <div class="movie-grid" data-id="${movie.imdbID}">
                   <img src="${movie.Poster}" class="movie-poster">
@@ -17,11 +28,13 @@ export function getFeedHtml(moviesArray, btn, btnAction) {
                     <p>${movie.Runtime}</p>
                     <p>${movie.Year}</p>
                     <p>${movie.Genre.split(', ')[0]}</p>
-                    <span class="add-remove-btn" data-${btn}="${movie.imdbID}">
-                      <img src="icons/icon-${btn}.svg" data-${btn}="${
-      movie.imdbID
-    }" />
-                      ${btnAction}
+                    <span class="add-remove-btn " data-${
+                      movie.isAdded ? 'remove' : 'add'
+                    }="${movie.imdbID}">
+                      <img class='icon-btn' src="icons/icon-${selectBtnIcon()}.svg" data-${
+      movie.isAdded ? 'remove' : 'add'
+    }="${movie.imdbID}" />
+                      ${movie.isAdded ? 'Remove' : 'Watchlist'}
                     </span>
                   </div>
                   <p class="movie-plot">${movie.Plot}</p>

@@ -5,9 +5,8 @@ const apiKey = '6804c63'
 const inputEl = document.getElementById('input-el')
 const searchedMoviesDiv = document.querySelector('.searched-movies')
 const startSearchDiv = document.querySelector('.start-search')
-let searchedMoviesArray = []
-
-const addedMoviesArray = retrieveWatchlistFromLocalStorage()
+let searchedMovies = []
+const watchlist = retrieveWatchlistFromLocalStorage() || []
 
 searchBtn.addEventListener('click', searchForMovies)
 
@@ -18,7 +17,7 @@ inputEl.addEventListener('keyup', (e) => {
 })
 
 inputEl.addEventListener('change', () => {
-  searchedMoviesArray = []
+  searchedMovies = []
 })
 
 document.addEventListener('click', (e) => {
@@ -42,8 +41,8 @@ function searchForMovies() {
         fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
           .then((res) => res.json())
           .then((data) => {
-            searchedMoviesArray.push(data)
-            console.log(searchedMoviesArray)
+            searchedMovies.push(data)
+            checkWatchlist(searchedMovies, watchlist)
             renderSearchedMovies()
           })
       }
@@ -56,32 +55,43 @@ function searchForMovies() {
 
 function renderSearchedMovies() {
   searchedMoviesDiv.style.paddingTop = '4em'
-  searchedMoviesDiv.innerHTML = getFeedHtml(
-    searchedMoviesArray,
-    'add',
-    'Watchlist'
-  )
+  searchedMoviesDiv.innerHTML = getFeedHtml(searchedMovies)
 }
 
 function handleAddClick(movieId) {
-  const isAdded = addedMoviesArray.some((movie) => movie.imdbID === movieId)
+  const onWatchlist = watchlist.some((movie) => movie.imdbID === movieId)
 
-  if (!isAdded) {
-    const targetMovieObj = searchedMoviesArray.filter(function (movie) {
+  if (!onWatchlist) {
+    let targetMovieObj = searchedMovies.filter(function (movie) {
       return movie.imdbID === movieId
     })[0]
 
-    addedMoviesArray.unshift(targetMovieObj)
+    targetMovieObj = { ...targetMovieObj, isAdded: true }
+
+    watchlist.unshift(targetMovieObj)
     addMoviesToLocalStorage()
+    checkWatchlist(searchedMovies, watchlist)
+    renderSearchedMovies()
   }
 }
 
+function checkWatchlist(searchedMovies, watchlist) {
+  searchedMovies.forEach((movie) => {
+    watchlist.forEach((addedMovie) => {
+      if (movie.imdbID === addedMovie.imdbID) {
+        movie.isChecked = true
+      }
+      return searchedMovies
+    })
+  })
+}
+
 function addMoviesToLocalStorage() {
-  localStorage.setItem('addedMovies', JSON.stringify(addedMoviesArray))
+  localStorage.setItem('watchlist', JSON.stringify(watchlist))
 }
 
 function retrieveWatchlistFromLocalStorage() {
-  return JSON.parse(localStorage.getItem('addedMovies'))
+  return JSON.parse(localStorage.getItem('watchlist'))
 }
 
 retrieveWatchlistFromLocalStorage()

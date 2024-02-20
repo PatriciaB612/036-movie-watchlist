@@ -232,6 +232,11 @@ span.add-remove-btn {
   align-items: center;
   gap: 0.5em;
   cursor: pointer;
+  touch-action: manipulation;
+}
+
+.icon-btn {
+  width: 1.2em;
 }
 
 .movie-plot {
