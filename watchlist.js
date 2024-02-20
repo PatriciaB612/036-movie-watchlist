@@ -14,8 +14,22 @@ function retrieveWatchlistFromLocalStorage() {
 }
 
 function renderWatchlist() {
-  watchlistDiv.style.paddingTop = '4em'
-  watchlistDiv.innerHTML = getFeedHtml(watchlist)
+  const hasMovies = watchlist.length > 0
+
+  if (hasMovies) {
+    watchlistDiv.style.paddingTop = '4em'
+    watchlistDiv.innerHTML = getFeedHtml(watchlist)
+  } else {
+    watchlistDiv.innerHTML = `<a href="index.html">
+      <div class="watchlist">
+        <p>Your watchlist is looking a little empty...</p>
+        <div>
+          <img src="icons/Icon-add.svg" alt="add-icon" />
+          <p>Let's add some movies!</p>
+        </div>
+      </div>
+    </a>`
+  }
 }
 
 function removeFromWatchlist(movieId) {
