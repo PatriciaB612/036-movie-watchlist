@@ -33,6 +33,8 @@ document.addEventListener('touchstart', (e) => {
 })
 
 function searchForMovies() {
+  searchedMovies = []
+  renderSearchedMovies()
   fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${inputEl.value}`)
     .then((res) => res.json())
     .then((data) => {
@@ -48,8 +50,10 @@ function searchForMovies() {
       }
     })
     .catch((err) => {
-      startSearchDiv.innerHTML = `<p>Unable to find what you’re looking for.</p>
-                                  <p>Please try another search.</p>`
+      searchedMoviesDiv.innerHTML = `<div class='start-search'>
+                                      <p>Unable to find what you’re looking for.</p>
+                                      <p>Please try another search.</p>
+                                    </div>`
     })
 }
 
